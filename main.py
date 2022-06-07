@@ -64,19 +64,24 @@ def update_task():
         print(f"all keys are: {all_keys}")
         print(all_data)
         to_delete = False
-        for thing in all_items:
-            thing.done = False # turns all db entries False, we'll add True back in next step
+        # for thing in all_items:
+        #     thing.done = False # turns all db entries False, we'll add True back in next step
         for check_key in all_keys:
             if check_key[:16] == "updateTaskButton":
                 delete_item_number = int(check_key[16:])
                 print(f"delete number is {delete_item_number}")
                 delete_item = Item.query.get(delete_item_number)
-                to_delete = True # we'll delete at end
+                if delete_item.done == True:
+                    to_delete = True # we'll delete at end
+
+        for thing in all_items:
+            thing.done = False # turns all db entries False, we'll add True back in next step
+
+        for check_key in all_keys:
             if check_key[:15] == "update_checkbox":
                 update_item_number = int(check_key[15:]) # returns all checkboxes that were checked
                 update_item = Item.query.get(int(check_key[15:]))
                 update_item.done = True
-                # db.session.commit()
         if to_delete == True:
             db.session.delete(delete_item)
         db.session.commit()
