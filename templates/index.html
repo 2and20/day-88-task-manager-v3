@@ -1,0 +1,50 @@
+{% include "header.html" %}
+
+<!--<del> or <s> should strikeout text-->
+
+<nav class="px-4 navbar navbar-dark sticky-top bg-primary">
+
+    <img class="iconpad" src="https://thumbs.dreamstime.com/z/cartoon-scottish-haggis-76053892.jpg" width="50" height="50" alt="">
+
+<span class="navbar-text">
+    <h2>Task Haggis<h2>
+  </span>
+
+    </nav>
+
+<br>
+<br>
+<form action="/submit" method="post">
+<div class="input-group mb-3">
+  <input type="text" class="form-control" id="newTask" name="new_task_sent" value="" placeholder="New task...">
+  <button class="btn btn-primary" id="newTaskButton" type="submit">Submit</button>
+</div>
+</form>
+<hr>
+
+
+<form action="/update" method="post">
+
+    {% for thing in all_items|reverse %}
+<div class="input-group mb-3">
+    <div class="input-group-text">
+        {% if thing.done == True %}
+        <input class="form-check-input mt-0" type="checkbox" name="update_checkbox{{thing.id}}" id="updateCheckbox{{thing.id}}" checked>
+        </div>
+        <input  disabled type="text" class="form-control striketext" id="update_text{{thing.id}}" name="update_text{{thing.id}}" placeholder="{{thing.taskdes}}">
+      <button class="btn btn-danger" name="updateTaskButton{{thing.id}}" id="updateTaskButton{{thing.id}}" type="submit">Delete</button>
+     {% else %}
+        <input class="form-check-input mt-0" type="checkbox" name="update_checkbox{{thing.id}}" id="updateCheckbox{{thing.id}}" >
+        </div>
+        <input disabled type="text" class="form-control" id="update_text{{thing.id}}" name="update_text{{thing.id}}" placeholder="{{thing.taskdes}}">
+      <button class="btn btn-success" name="updateTaskButton{{thing.id}}" id="updateTaskButton{{thing.id}}" type="submit">Update</button>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+
+    </form>
+
+
+
+{% include "footer.html" %}

@@ -1,0 +1,27 @@
+
+h2 {text-align:left;
+    }
+
+hr {height:2px;
+    border-width:0;
+    color:gray;
+    background-color:gray;
+    width:33%;
+    margin-left: auto;
+    margin-right: auto;}
+
+.iconpad {padx:5%}
+
+.striketext {text-decoration: line-through}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  text-align:center;
+}
+
+.container-fluid-nav div{
+  display: flex;
+justify-content: space-around;}
+
+.text-center {text-align:center;}
