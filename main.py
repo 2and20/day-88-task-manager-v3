@@ -4,6 +4,8 @@ from flask import Flask, render_template, \
 from flask_sqlalchemy import SQLAlchemy
 # from flask_migrate import Migrate, migrate
 import sqlite3
+import os
+
 
 
 # i set an env variable in powershell:
@@ -12,7 +14,9 @@ import sqlite3
 app = Flask(__name__)
 
 # makes a configuration setting so we can use SQLite database in our app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # create SQLAlchemy database instance...just as easy as creating an object!
