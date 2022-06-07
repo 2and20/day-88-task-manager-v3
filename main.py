@@ -14,12 +14,26 @@ import psycopg2
 
 app = Flask(__name__)
 
-DATABASE_URL = 'postgres://odmpmyvhuaasgq:b89b69c44e264196aaa2d9ba83b9539f6c877c5453da450c3aacedb127439393@ec2-52-30-67-143.eu-west-1.compute.amazonaws.com:5432/dfv12skb1ba9h'
+# DATABASE_URL = 'postgres://odmpmyvhuaasgq:b89b69c44e264196aaa2d9ba83b9539f6c877c5453da450c3aacedb127439393@ec2-52-30-67-143.eu-west-1.compute.amazonaws.com:5432/dfv12skb1ba9h'
 
 # makes a configuration setting so we can use SQLite database in our app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'sqlite:///tasks.db')
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+
+# ---------------------- setup SQL databases ----------------------#
+if os.environ.get('DATABASE_URL') is None:
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///tasks.db'
+else:
+    uri = os.environ.get('DATABASE_URL')
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri
+
+
+
+
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # create SQLAlchemy database instance...just as easy as creating an object!
